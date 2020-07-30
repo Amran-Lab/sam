@@ -40,7 +40,13 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-2
-    - name: Test with pytest
-      run: |
-        aws s3 ls  
+        aws-region: eu-west-3
+    - name: sam build
+      uses: youyo/aws-sam-action/python3.8@master
+      with:
+        sam_command: build
+
+    - name: sam deploy
+      uses: youyo/aws-sam-action/python3.8@master
+      with:
+        sam_command: 'deploy --no-fail-on-empty-changeset'
