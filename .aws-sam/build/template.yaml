@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: basic-aws-apigateway-demo Sample SAM Template for basic-aws-apigateway-demo
+Resources:
+  BasicAWSApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: Basic AWS Api Gateway
+      StageName: Staging
+      Cors:
+        AllowMethods: '''POST, GET'''
+        AllowOrigin: '''*'''
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: HelloWorldFunction
+      Policies:
+      - AmazonDynamoDBFullAccess
+      - AWSLambdaBasicExecutionRole
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Events:
+        HelloWorldApi:
+          Type: Api
+          Properties:
+            RestApiId:
+              Ref: BasicAWSApiGateway
+            Path: /hello
+            Method: GET
+  DynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: sam_table
+      AttributeDefinitions:
+      - AttributeName: ID
+        AttributeType: S
+      KeySchema:
+      - AttributeName: ID
+        KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+Outputs:
+  BasicAWSApiGateway:
+    Description: API Gateway endpoint URL for Staging stage for Hello World function
+    Value:
+      Fn::Sub: https://${BasicAWSApiGateway}.execute-api.${AWS::Region}.amazonaws.com/Staging/hello/
+  BasicAWSApiGatewayRestApiId:
+    Description: API Gateway ARN for Basic AWS API Gateway
+    Value:
+      Ref: BasicAWSApiGateway
+    Export:
+      Name: BasicAWSApiGateway-RestApiId
+  BasicAWSApiGatewayRootResourceId:
+    Value:
+      Fn::GetAtt:
+      - BasicAWSApiGateway
+      - RootResourceId
+    Export:
+      Name: BasicAWSApiGateway-RootResourceId
