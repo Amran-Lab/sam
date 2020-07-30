@@ -47,6 +47,17 @@ jobs:
     - name: Sam Deploy
       run: |
         cat "input.txt" | sam deploy --guided
+        
+    - name: Table Put Item
+      run: |
+        aws dynamodb put-item \
+          --table-name sam_table \
+          --item '{
+            "ID": {"S": "1"},
+            "Visit": {"N": "1"}
+          }'
+      
+        
       
 
 
