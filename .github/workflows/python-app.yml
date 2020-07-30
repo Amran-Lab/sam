@@ -46,7 +46,7 @@ jobs:
         sam build
     - name: Sam Deploy
       run: |
-        cat "inputs.txt" | sam deploy --guided
+        cat "input.txt" | sam deploy --guided
       
 
 
