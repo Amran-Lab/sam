@@ -2,3 +2,4 @@ github-thing
 eu-west-3
 y
 y
+y
