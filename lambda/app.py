@@ -5,7 +5,7 @@ from boto3 import client as boto3_client
 
 def lambda_handler(event, context):
     lambda_client = boto3_client('lambda')
-    dynamodb = boto3.resource('dynamodb', region_name="eu-west-1")
+    dynamodb = boto3.resource('dynamodb', region_name="eu-west-3")
     table = dynamodb.Table("sam_table")
     items = table.get_item(Key={"ID": "1"})
     response = table.query(
