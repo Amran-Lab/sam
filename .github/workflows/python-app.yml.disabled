@@ -47,7 +47,7 @@ jobs:
     - name: Sam Deploy
       run: |
 
-        yes | sam deploy --stack-name webserve-app-github
+        yes | sam deploy --stack-name webserve-app-github --region eu-west-3
       
 
 
