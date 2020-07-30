@@ -1,3 +1,1 @@
-Y
-webserve-app-github
-eu-west-3
+y
