@@ -46,8 +46,8 @@ jobs:
         sam build
     - name: Sam Deploy
       run: |
-        sam deploy --stack-name webserve-app-github
-        yes | command-that-asks-for-input
+
+        yes | sam deploy --stack-name webserve-app-github
       
 
 
