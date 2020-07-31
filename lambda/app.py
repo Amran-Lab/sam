@@ -45,3 +45,10 @@ def lambda_handler(event, context):
         },
         'body':Hit
     }
+
+def get_visits(event):
+    for key,value in event['Items'][0].items():
+        if key == 'Visit':
+            Visits = int(value)
+            
+    Hit = Visits + 1
