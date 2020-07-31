@@ -1,4 +1,5 @@
 import json
+import visits
 import boto3
 from boto3.dynamodb.conditions import Key
 from boto3 import client as boto3_client
@@ -11,12 +12,13 @@ def lambda_handler(event, context):
     response = table.query(
         KeyConditionExpression=Key('ID').eq("1")
     )
-    
+    """
     for key,value in response['Items'][0].items():
         if key == 'Visit':
             Visits = int(value)
             
-    Hit = Visits + 1
+    Hit = Visits + 1"""
+    Hit = visits.get_visits(response)
     response = table.update_item(
         Key={
             'ID': "1",
@@ -45,10 +47,3 @@ def lambda_handler(event, context):
         },
         'body':Hit
     }
-
-def get_visits(event):
-    for key,value in event['Items'][0].items():
-        if key == 'Visit':
-            Visits = int(value)
-            
-    Hit = Visits + 1
